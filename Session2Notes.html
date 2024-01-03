@@ -1,0 +1,127 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="https://unpkg.com/jspsych@7.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-call-function@1.0.0"></script>
+    <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="jatos.js"></script>
+  </head>
+  <style>
+        .bullet-list {
+            list-style-type: disc; /* Use a bullet point as the list marker */
+            margin-left: 20px; /* Add left margin for indentation */
+            padding-left: 0; /* Remove default padding */
+        }
+        .bullet-list li {
+            text-align: left; /* Left-align the text within list items */
+        }
+    </style>
+  <body></body>
+  <script>
+      // This is the script for When task (W task)
+
+
+/* initialize jsPsych */
+var jsPsych = initJsPsych({
+  on_finish: () => jatos.endStudy(jsPsych.data.get().csv())
+});
+    
+    timeline=[];
+
+// generate a random subject ID with 6 characters
+var subject_id = jsPsych.randomization.randomID(6);
+
+
+// record the condition assignment in the jsPsych data
+// this adds a property called 'subject' and a property called 'condition' to every trial
+jsPsych.data.addProperties({
+  subject: subject_id,
+});
+
+// Giving link to the consent form
+var Consent = {
+      type: jsPsychInstructions,
+      pages: [
+        '<p style="text-align: center; font-size: 20px; color: black; font-family: Arial, sans-serif;"> Session 2' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> Now, that we have donwloaded and looked into our sample data, we are going to test different methods of classification on it. we know that our data consists of 11 columns (dimensions). The last column includes labels for our data showing that each data point belongs into class 1 "gamma" or class 2 "hadron".' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> Our goal is that based on this data we make a classifier that is able to classify any new data point that we add to this dataset into one of these two classes as accurate as possible. For all the classification algorithms that we are going to review in this course, we first divide our dataset into 3 portions: 60% for training our classifier, 20% for testing our classifier, and 20% for validating it. ' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> The first classifier that we test is kNN (k nearest neighbors). To find the class of each datapoint, this classifier looks into the labels of k neighboring datapoints. The label of the new datapoint is the same as the label of the majority of the neighbors.' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> Now, let&apos;s run the first part of mykNN.ipynb (to the end of block 4) ' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> We use "split" function from numpy library to divide the data into 3 portions. Since we want to pick each datapoint only one time, the replace would be &apos; false &apos; ' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> frac=1 means that we want to split all our datapoints. The portions come in the last array' +
+        '<p style="text-align: left; font-size: 16px; color: rgba(0,0,0,125); font-family: Arial, sans-serif;"> xxx '
+      ],
+    }
+
+// Asi commnted until 82
+/*var demographic = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'What is your age?', required: true},
+    {prompt: 'What is your gender?', required: true},
+    {prompt: 'What country do you currently live in?', required: true},
+    {prompt: 'What is your Prolific ID?', required: true},
+  ]
+}
+*/
+
+// generating instructions
+// Asi commnted until 104
+/*  var General_instructions = {			
+      type: jsPsychInstructions,
+      pages: [
+        'Welcome to this experiment.',
+        'You will see a spinning clock hand, which will rotate around the clock face in a regular speed.'+
+        '<p> Please <strong>FIXATE</strong> your gaze to the <strong>CROSS IN THE MIDDLE OF THE CLOCK</strong>.'+
+        '<p> Also, please make sure that your cursor does not block the clock face.'+
+        '<p> Your task will be to wait the clock hand to complete <strong>ONE</strong> whole rotation. Then, please feel free to press the key <strong>ENTER</strong> whenever you want.'+
+        '<p> You <strong>SHOULD NOT PRE-PLAN</strong> your movement, and you <strong>SHOULD NOT ALWAYS</strong> press the key when the clock hand is in a <strong>PARTICULAR POSITION</strong> of the clock face.'+
+        '<p> There will be <strong>TWO</strong> practice phases. Please press next to start the first practice if you understand the instruction.',
+        'In the first practice phase, please fixate to the <strong>CROSS</strong>, wait the clock hand to complete <strong>ONE</strong> whole rotation, and press the key <strong>ENTER</strong> whenever you want.'+
+        '<p> After you press the key the clock hand will keep its rotation and will disappear.'+
+        '<p> When the clock hand reappears, you should indicate the position of the clock hand at the <strong>MOMENT</strong> when you <strong>PRESS THE KEY</strong>.'+
+        '<p> Please press the key <strong>BEFORE</strong> the <strong>THIRD</strong> rotation ends.',
+        '<p> Please press next to start the first practice.',
+      ],
+      show_clickable_nav: true
+    }
+*/
+    
+
+//randomize version
+//timeline.push(Consent,demographic,General_instructions);		// Asi commented this line and replaced with the next line
+timeline.push(Consent);
+
+
+
+/* post experiment strategy check */
+// Asi commnted until 134
+/*var check_1 = {
+  type: jsPsychSurveyMultiChoice,
+  questions: [
+    {
+      prompt: "Did you pre-plan when to press the key at the beginning of your trial?", 
+      name: 'Frequency', 
+      options: ['Never', 'Seldom', 'Sometimes', 'Often', 'Always'], 
+      required: true
+    }, 
+    {
+      prompt: "Did you always press the key whenever the clock hand is in a particular position (e.g., when it is near 20)?", 
+      name: 'Clock hand', 
+      options: ['Never', 'Seldom', 'Sometimes', 'Often', 'Always'], 
+      required: true
+    }
+  ],
+};
+
+timeline.push(check_1); 
+*/
+  /* end of the experiment */
+    jsPsych.run(timeline);
+  </script>
+</html>
